@@ -1,0 +1,162 @@
+﻿@* Pages/AbmAlumnos.cshtml *@
+@page
+@model demo_clase3.Pages.AbmAlumnosModel
+
+@{
+    ViewData["Title"] = "ABM de alumnos";
+}
+
+<style>
+    .abm-wrap {
+        display: flex;
+        gap: 2rem;
+        flex-wrap: wrap;
+        font-family: "Segoe UI",Tahoma,Geneva,Verdana,sans-serif;
+    }
+
+    .abm-form {
+        flex: 0 0 320px;
+    }
+
+        .abm-form label {
+            display: block;
+            margin: .25rem 0;
+            font-weight: 600;
+        }
+
+        .abm-form input {
+            width: 100%;
+            padding: .45rem;
+            border: 1px solid #cfcfcf;
+            border-radius: 4px;
+        }
+
+    .form-actions {
+        margin-top: 1rem;
+        display: flex;
+        gap: .5rem;
+    }
+
+    .text-danger {
+        color: #b30000;
+        font-size: .9rem;
+    }
+
+    .btn {
+        padding: .45rem .75rem;
+        border-radius: 6px;
+        border: none;
+        cursor: pointer;
+        font-weight: 600;
+    }
+
+    .btn-primary {
+        background: #0078d4;
+        color: #fff;
+    }
+
+    .btn-secondary {
+        background: #e6e6e6;
+        color: #222;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .abm-tabla {
+        flex: 1;
+        min-width: 320px;
+        border-collapse: collapse;
+        width: 100%;
+    }
+
+        .abm-tabla th, .abm-tabla td {
+            border-bottom: 1px solid #e3e3e3;
+            padding: .4rem .5rem;
+            text-align: left;
+        }
+
+    .fila-editando {
+        background: #fff6da;
+    }
+
+    .mensaje {
+        background: #e7f5ec;
+        border-left: 4px solid #2e7d4f;
+        padding: .5rem .75rem;
+        border-radius: 4px;
+        margin-bottom: 1rem;
+    }
+</style>
+
+<h2>ABM de alumnos</h2>
+
+@if (TempData["Mensaje"] != null)
+{
+    <div class="mensaje">@TempData["Mensaje"]</div>
+}
+
+<div class="abm-wrap">
+
+    <form method="post" asp-page-handler="Guardar" class="abm-form">
+        <h3>@(Model.EnEdicion ? $"Editando a {Model.Alumno.Nombre}" : "Nuevo alumno")</h3>
+
+        <input type="hidden" asp-for="Id" />
+
+        <div>
+            <label asp-for="Alumno.Nombre"></label>
+            <input asp-for="Alumno.Nombre" />
+            <span asp-validation-for="Alumno.Nombre" class="text-danger"></span>
+        </div>
+        <div>
+            <label asp-for="Alumno.Email"></label>
+            <input asp-for="Alumno.Email" />
+            <span asp-validation-for="Alumno.Email" class="text-danger"></span>
+        </div>
+        <div>
+            <label asp-for="Alumno.Carrera"></label>
+            <input asp-for="Alumno.Carrera" />
+            <span asp-validation-for="Alumno.Carrera" class="text-danger"></span>
+        </div>
+        <div>
+            <label asp-for="Alumno.Edad"></label>
+            <input asp-for="Alumno.Edad" type="number" min="18" max="60" />
+            <span asp-validation-for="Alumno.Edad" class="text-danger"></span>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-primary">
+                @(Model.EnEdicion ? "Guardar cambios" : "Guardar")
+            </button>
+            @if (Model.EnEdicion)
+            {
+                <a asp-page="AbmAlumnos" class="btn btn-secondary">Cancelar edición</a>
+            }
+        </div>
+    </form>
+
+    <table class="abm-tabla">
+        <tr><th>Nombre</th><th>Email</th><th>Carrera</th><th>Edad</th><th></th></tr>
+        @foreach (var a in Model.Alumnos)
+        {
+            <tr class="@(a.Id == Model.Id ? "fila-editando" : "")">
+                <td>@a.Nombre</td>
+                <td>@a.Email</td>
+                <td>@a.Carrera</td>
+                <td>@a.Edad</td>
+                <td>
+                    <a asp-page="AbmAlumnos" asp-route-id="@a.Id">Editar</a>
+                    <form method="post" asp-page-handler="Eliminar" asp-route-id="@a.Id" style="display:inline"
+                          onsubmit="return confirm('¿Eliminar a @a.Nombre?');">
+                        <button type="submit" style="background:none;border:none;color:#b30000;cursor:pointer;">Eliminar</button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </table>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

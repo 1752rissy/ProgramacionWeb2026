@@ -1,0 +1,92 @@
+﻿@page
+@model demo_clase3.Pages.altaAlumnoModel
+
+@{
+    ViewData["Title"] = "Alta de alumno";
+}
+
+<style>
+    .alumno-form {
+        max-width: 520px;
+        margin: 1rem auto;
+        font-family: "Segoe UI",Tahoma,Geneva,Verdana,sans-serif;
+    }
+
+        .alumno-form label {
+            display: block;
+            margin: .25rem 0;
+            font-weight: 600;
+        }
+
+        .alumno-form input {
+            width: 100%;
+            padding: .45rem;
+            border: 1px solid #cfcfcf;
+            border-radius: 4px;
+        }
+
+    .form-actions {
+        margin-top: 1rem;
+        display: flex;
+        gap: .5rem;
+        justify-content: flex-end;
+    }
+
+    .text-danger {
+        color: #b30000;
+        font-size: .9rem;
+    }
+
+    .btn {
+        padding: .45rem .75rem;
+        border-radius: 6px;
+        border: none;
+        cursor: pointer;
+        font-weight: 600;
+    }
+
+    .btn-primary {
+        background: #0078d4;
+        color: #fff;
+    }
+
+    .btn-secondary {
+        background: #e6e6e6;
+        color: #222;
+    }
+</style>
+
+<h2>Alta de alumno</h2>
+
+<form method="post" class="alumno-form">
+    <div>
+        <label asp-for="Alumno.Nombre"></label>
+        <input asp-for="Alumno.Nombre" placeholder="Nombre" />
+        <span asp-validation-for="Alumno.Nombre" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="Alumno.Email"></label>
+        <input asp-for="Alumno.Email" placeholder="correo@dominio.com" />
+        <span asp-validation-for="Alumno.Email" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="Alumno.Carrera"></label>
+        <input asp-for="Alumno.Carrera" placeholder="Carrera" />
+        <span asp-validation-for="Alumno.Carrera" class="text-danger"></span>
+    </div>
+    <div>
+        <label asp-for="Alumno.Edad"></label>
+        <input asp-for="Alumno.Edad" type="number" min="18" max="60" placeholder="18" />
+        <span asp-validation-for="Alumno.Edad" class="text-danger"></span>
+    </div>
+    <div class="form-actions">
+        <button type="reset" class="btn btn-secondary">Limpiar</button>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+    </div>
+</form>
+
+<p><a asp-page="Listado">Ver listado de alumnos</a></p>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

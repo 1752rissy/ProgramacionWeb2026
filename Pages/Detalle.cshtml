@@ -1,0 +1,35 @@
+﻿@page
+@model demo_clase3.Pages.DetalleModel
+
+@{
+    ViewData["Title"] = "Detalle del alumno";
+}
+
+<h2>Detalle del alumno</h2>
+
+@if (!string.IsNullOrEmpty(Model.ErrorMessage))
+{
+    <div style="color:#b30000; padding:0.5rem; border:1px solid #f0c0c0; border-radius:4px;">
+        @Model.ErrorMessage
+    </div>
+}
+else if (Model.Alumno is not null)
+{
+    <div style="max-width:520px; margin-top:0.5rem;">
+        <dl>
+            <dt><strong>Nombre</strong></dt>
+            <dd>@Model.Alumno.Nombre</dd>
+
+            <dt><strong>Carrera</strong></dt>
+            <dd>@Model.Alumno.Carrera</dd>
+        </dl>
+    </div>
+}
+else
+{
+    <div>No hay datos para mostrar.</div>
+}
+
+<p style="margin-top:1rem;">
+    <a asp-page="/Index">Volver</a>
+</p>

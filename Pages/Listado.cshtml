@@ -1,0 +1,30 @@
+﻿@page
+@model demo_clase3.Pages.ListadoModel
+
+<h2>Alumnos</h2>
+
+@if (TempData["Mensaje"] != null)
+{
+    <p>@TempData["Mensaje"]</p>
+}
+
+<table>
+    <tr><th>Nombre</th><th>Email</th><th>Carrera</th><th>Edad</th><th></th></tr>
+    @foreach (var a in Model.Alumnos)
+    {
+        <tr>
+            <td>@a.Nombre</td>
+            <td>@a.Email</td>
+            <td>@a.Carrera</td>
+            <td>@a.Edad</td>
+            <td>
+                <a asp-page="Editar" asp-route-id="@a.Id">Editar</a>
+                <form method="post" asp-page-handler="Eliminar" asp-route-id="@a.Id" style="display:inline">
+                    <button type="submit">Eliminar</button>
+                </form>
+            </td>
+        </tr>
+    }
+</table>
+
+<p><a asp-page="AltaAlumno">Alta de alumno</a></p>

@@ -1,0 +1,18 @@
+﻿@page
+@model IndexModel
+
+@{
+    ViewData["Title"] = "programacion web ii";
+}
+
+<div class="text-center">
+    <h1 class="display-4">TITULO PRINCIPAL</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">ALUMNOS</a>.</p>
+
+    @if (!string.IsNullOrEmpty(Model.UltimoAlumno))
+    {
+        <div style="margin-top:1rem; padding:0.5rem; background:#f7f7f7; border-radius:4px;">
+            <strong>Último alumno cargado:</strong> @Model.UltimoAlumno
+        </div>
+    }
+</div>
